@@ -1,1062 +1,260 @@
-@font-face {
-  font-family: "Hana2";
-  src: url("./Hana2-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Hana2";
-  src: url("./Hana2-Medium.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Hana2";
-  src: url("./Hana2-Bold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Hana2";
-  src: url("./Hana2-Heavy.ttf") format("truetype");
-  font-weight: 950;
-  font-style: normal;
-  font-display: swap;
-}
-
-:root {
-  --hana-green: #00856f;
-  --hana-deep: #00483f;
-  --hana-teal: #00a98f;
-  --hana-mint: #dff6ef;
-  --hana-cream: #f6f1de;
-  --px-khaki: #3e4a35;
-  --px-dark: #0e1b18;
-  --px-olive: #677352;
-  --px-sand: #efe7cf;
-  --px-yellow: #ffd564;
-  --ink: #101c19;
-  --muted: #69756f;
-  --line: rgba(0, 72, 63, 0.18);
-  --card: rgba(255, 255, 249, 0.94);
-  --white: #ffffff;
-  --shadow: 0 24px 54px rgba(0, 55, 47, 0.18);
-  --inner: inset 0 1px 0 rgba(255,255,255,.7);
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: "Hana2", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  color: var(--ink);
-  background-color: #07342f;
-  background-image:
-    radial-gradient(circle at 8% 8%, rgba(0, 169, 143, 0.35), transparent 23%),
-    radial-gradient(circle at 92% 0%, rgba(255, 213, 100, 0.18), transparent 27%),
-    linear-gradient(135deg, rgba(7, 52, 47, 0.96), rgba(0, 111, 93, 0.9) 48%, rgba(66, 78, 57, 0.9));
-  min-height: 100vh;
-}
-
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-body::before {
-  opacity: .18;
-  background-image:
-    linear-gradient(35deg, transparent 0 38%, rgba(255,255,255,.12) 38% 50%, transparent 50% 100%),
-    linear-gradient(145deg, transparent 0 35%, rgba(10, 35, 30, .26) 35% 53%, transparent 53% 100%),
-    linear-gradient(60deg, transparent 0 42%, rgba(255, 213, 100, .11) 42% 54%, transparent 54% 100%);
-  background-size: 96px 72px, 124px 88px, 140px 106px;
-}
-body::after {
-  opacity: .18;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,.65) 1px, transparent 1.5px);
-  background-size: 18px 18px;
-  mask-image: linear-gradient(to bottom, transparent 0, black 15%, black 75%, transparent 100%);
-}
-
-.wrapper {
-  width: min(1080px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 22px 0 60px;
-}
-
-.site-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 14px;
-  padding: 12px 14px;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 24px;
-  background: rgba(3, 28, 25, .48);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 14px 34px rgba(0,0,0,.14);
-}
-.logo-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-.logo-wrap img {
-  height: 34px;
-  width: auto;
-  display: block;
-}
-.unit-label {
-  color: rgba(255,255,255,.82);
-  font-weight: 900;
-  letter-spacing: -.2px;
-  white-space: nowrap;
-}
-.topbar-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  color: #042b27;
-  background: var(--px-yellow);
-  font-weight: 950;
-  font-size: 13px;
-  box-shadow: var(--inner);
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  min-height: 360px;
-  color: white;
-  border-radius: 34px;
-  padding: 34px;
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(255,255,255,.2);
-  background:
-    linear-gradient(120deg, rgba(0, 72, 63, .96), rgba(0, 133, 111, .94) 53%, rgba(70, 82, 58, .92)),
-    radial-gradient(circle at 88% 18%, rgba(255,255,255,.26), transparent 28%);
-}
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: .18;
-  background-image:
-    linear-gradient(45deg, rgba(255,255,255,.22) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(255,255,255,.18) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(255,255,255,.16) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.12) 75%);
-  background-size: 52px 52px;
-  background-position: 0 0, 0 26px, 26px -26px, -26px 0px;
-}
-.hero::after {
-  content: "PX";
-  position: absolute;
-  right: 34px;
-  bottom: -44px;
-  font-size: clamp(120px, 19vw, 210px);
-  font-weight: 950;
-  letter-spacing: -12px;
-  color: rgba(255,255,255,.11);
-  line-height: .8;
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: min(640px, 100%);
-}
-.hero-visual {
-  position: absolute;
-  right: 28px;
-  top: 38px;
-  bottom: 24px;
-  width: min(320px, 34vw);
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
-}
-.hero-visual::before {
-  content: "";
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.18);
-  filter: blur(2px);
-  bottom: 28px;
-}
-.hero-visual img {
-  position: relative;
-  width: min(250px, 100%);
-  max-height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 26px rgba(0,0,0,.24));
-}
-.hero-card {
-  position: absolute;
-  right: 246px;
-  bottom: 34px;
-  z-index: 3;
-  width: 154px;
-  padding: 12px 12px 14px;
-  border-radius: 18px;
-  color: #0b201d;
-  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(240,250,246,.93));
-  box-shadow: 0 18px 36px rgba(0,0,0,.18);
-  transform: rotate(-4deg);
-}
-.hero-card small {
-  display: block;
-  color: var(--hana-green);
-  font-weight: 950;
-  margin-bottom: 6px;
-}
-.hero-card strong {
-  display: block;
-  font-size: 18px;
-  line-height: 1.1;
-  letter-spacing: -.7px;
-}
-
-.hero-lead {
-  margin: 6px 0 10px;
-  max-width: 700px;
-  font-size: clamp(30px, 4.8vw, 46px);
-  line-height: 1.22;
-  letter-spacing: -1.1px;
-  font-weight: 900;
-  color: #ffffff;
-  word-break: keep-all;
-}
-
-.hero-subtext {
-  max-width: 620px;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 18px;
-  line-height: 1.68;
-  margin-bottom: 0;
-  word-break: keep-all;
-}
-
-.badge {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 13px;
-  border-radius: 999px;
-  background: rgba(255, 213, 100, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  color: #17312c;
-  font-weight: 950;
-  font-size: 14px;
-  box-shadow: var(--inner);
-}
-
-h1, h2, h3, p { margin-top: 0; }
-h1 {
-  margin: 18px 0 10px;
-  font-size: clamp(46px, 8vw, 86px);
-  letter-spacing: -4px;
-  line-height: .96;
-  font-weight: 950;
-}
-.hero-meta {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 22px;
-}
-.hero-meta span {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 11px;
-  border-radius: 12px;
-  background: rgba(4, 43, 39, .42);
-  border: 1px solid rgba(255,255,255,.16);
-  color: rgba(255,255,255,.92);
-  font-weight: 900;
-  font-size: 13px;
-}
-
-.panel {
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,.58);
-  border-radius: 30px;
-  padding: 28px;
-  margin-top: 18px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-}
-
-.start-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
-  gap: 18px;
-  align-items: stretch;
-}
-.start-grid::before {
-  content: "PX SUPPLY";
-  position: absolute;
-  right: 30px;
-  top: -12px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  background: var(--px-dark);
-  color: var(--px-yellow);
-  font-size: 12px;
-  font-weight: 950;
-  letter-spacing: 1px;
-  box-shadow: 0 10px 22px rgba(0,0,0,.18);
-}
-
-.mini-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-  padding: 22px;
-  background:
-    linear-gradient(180deg, #fff, #fbfff9),
-    radial-gradient(circle at 100% 0%, rgba(0,133,111,.18), transparent 36%);
-  border: 1px solid var(--line);
-  box-shadow: var(--inner);
-}
-.mini-card::after {
-  content: "";
-  position: absolute;
-  right: -20px;
-  bottom: -34px;
-  width: 152px;
-  height: 152px;
-  background: url("./hana-symbol.png") center/contain no-repeat;
-  opacity: .07;
-}
-.mini-card.with-character {
-  min-height: 238px;
-}
-.mini-card.with-character img {
-  position: absolute;
-  right: 18px;
-  bottom: 10px;
-  width: 112px;
-  filter: drop-shadow(0 12px 14px rgba(0,0,0,.12));
-}
-.mini-card.with-character p {
-  max-width: calc(100% - 92px);
-}
-
-.ration-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.ration-title strong {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--hana-deep);
-  font-size: 19px;
-  font-weight: 950;
-}
-.ration-title strong::before {
-  content: "";
-  width: 9px;
-  height: 22px;
-  border-radius: 99px;
-  background: linear-gradient(180deg, var(--hana-teal), var(--hana-green));
-}
-.tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: var(--hana-mint);
-  color: var(--hana-deep);
-  font-size: 12px;
-  font-weight: 950;
-  border: 1px solid rgba(0, 72, 63, .1);
-}
-
-.btn {
-  width: 100%;
-  border: 0;
-  border-radius: 18px;
-  padding: 17px 18px;
-  font-size: 17px;
-  font-weight: 950;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--hana-green), var(--hana-deep));
-  color: white;
-  transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
-  box-shadow: 0 14px 28px rgba(0, 133, 111, 0.26), var(--inner);
-}
-.btn:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(0, 133, 111, 0.32); }
-.btn:active { transform: translateY(0); }
-.btn.secondary {
-  background: #fff;
-  color: var(--hana-deep);
-  border: 1px solid var(--line);
-  box-shadow: var(--inner);
-}
-.btn.small {
-  width: auto;
-  font-size: 14px;
-  padding: 10px 13px;
-  border-radius: 13px;
-}
-
-.progress-wrap {
-  width: 100%;
-  height: 14px;
-  border-radius: 999px;
-  background: rgba(0, 72, 63, 0.11);
-  overflow: hidden;
-  margin: 6px 0 20px;
-  border: 1px solid rgba(0,72,63,.08);
-}
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: repeating-linear-gradient(135deg, var(--hana-green) 0 14px, var(--hana-teal) 14px 28px);
-  border-radius: inherit;
-  transition: width .22s ease;
-}
-
-.q-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--muted);
-  font-weight: 950;
-  margin-bottom: 10px;
-}
-.question-title {
-  font-size: clamp(27px, 4.4vw, 42px);
-  letter-spacing: -1.8px;
-  line-height: 1.15;
-  margin-bottom: 20px;
-  word-break: keep-all;
-}
-.choices { display: grid; gap: 12px; }
-.choice {
-  position: relative;
-  width: 100%;
-  border: 1px solid var(--line);
-  background: #fff;
-  border-radius: 20px;
-  padding: 18px 20px 18px 58px;
-  text-align: left;
-  font-size: 17px;
-  font-weight: 900;
-  cursor: pointer;
-  transition: transform .14s ease, border .14s ease, background .14s ease, box-shadow .14s ease;
-  box-shadow: var(--inner);
-}
-.choice::before {
-  content: "✓";
-  position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 27px;
-  height: 27px;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: var(--hana-mint);
-  color: var(--hana-green);
-  font-weight: 950;
-}
-.choice:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0, 133, 111, .52);
-  background: linear-gradient(180deg, #fff, #f7fffb);
-  box-shadow: 0 12px 24px rgba(0,72,63,.11);
-}
-
-.result-top {
-  display: grid;
-  grid-template-columns: 118px 1fr;
-  gap: 20px;
-  align-items: center;
-}
-.result-icon {
-  width: 118px;
-  height: 118px;
-  display: grid;
-  place-items: center;
-  font-size: 56px;
-  border-radius: 34px;
-  background:
-    linear-gradient(135deg, var(--hana-mint), #fff),
-    radial-gradient(circle, rgba(255,213,100,.38), transparent 55%);
-  border: 1px solid var(--line);
-  box-shadow: var(--inner), 0 16px 32px rgba(0,72,63,.1);
-}
-.result-name {
-  font-size: clamp(34px, 5vw, 56px);
-  line-height: 1.02;
-  letter-spacing: -2.4px;
-  margin-bottom: 8px;
-  font-weight: 950;
-  color: var(--hana-deep);
-}
-.benefits {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 13px;
-  margin-top: 18px;
-}
-.benefit {
-  position: relative;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 19px;
-  box-shadow: var(--inner);
-}
-.benefit::after {
-  content: "HANA";
-  position: absolute;
-  right: -6px;
-  bottom: -8px;
-  font-size: 36px;
-  font-weight: 950;
-  color: rgba(0, 72, 63, .055);
-}
-.benefit h3 { margin: 10px 0 8px; font-size: 19px; color: var(--ink); }
-.benefit p { color: var(--muted); line-height: 1.55; margin-bottom: 0; word-break: keep-all; }
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
-.dashboard-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 18px;
-}
-.dashboard-title-block {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.dashboard-character {
-  width: 112px;
-  max-height: 90px;
-  object-fit: contain;
-  filter: drop-shadow(0 12px 16px rgba(0,0,0,.1));
-}
-.dashboard-header h1 {
-  color: var(--hana-deep);
-  font-size: clamp(36px, 5vw, 60px);
-  margin: 10px 0 0;
-}
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-.stat {
-  position: relative;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 23px;
-  padding: 19px;
-  box-shadow: var(--inner);
-}
-.stat::after {
-  content: "";
-  position: absolute;
-  right: -22px;
-  top: -20px;
-  width: 78px;
-  height: 78px;
-  background: var(--hana-mint);
-  border-radius: 999px;
-  opacity: .65;
-}
-.stat small {
-  position: relative;
-  color: var(--muted);
-  font-weight: 950;
-  z-index: 1;
-}
-.stat strong {
-  position: relative;
-  display: block;
-  font-size: 34px;
-  margin-top: 8px;
-  color: var(--hana-deep);
-  z-index: 1;
-}
-.section-title {
-  margin: 30px 0 12px;
-  font-size: 24px;
-  font-weight: 950;
-  color: var(--hana-deep);
-}
-.bar-list { display: grid; gap: 10px; }
-.bar-row {
-  display: grid;
-  grid-template-columns: 180px 1fr 54px;
-  gap: 12px;
-  align-items: center;
-  padding: 12px;
-  border-radius: 16px;
-  background: rgba(255,255,255,.78);
-  border: 1px solid rgba(0,72,63,.1);
-}
-.bar-label { font-weight: 950; color: #20302c; }
-.bar-bg {
-  height: 18px;
-  background: rgba(0, 72, 63, 0.11);
-  border-radius: 999px;
-  overflow: hidden;
-}
-.bar-fill {
-  height: 100%;
-  background: repeating-linear-gradient(135deg, var(--hana-green) 0 16px, var(--hana-teal) 16px 32px);
-  border-radius: 999px;
-}
-.table-wrap { overflow-x: auto; }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-}
-th, td {
-  padding: 13px 14px;
-  border-bottom: 1px solid rgba(0, 72, 63, 0.11);
-  text-align: left;
-  font-size: 14px;
-}
-th { color: var(--hana-deep); background: var(--hana-mint); font-weight: 950; }
-.empty {
-  padding: 30px;
-  text-align: center;
-  color: var(--muted);
-  background: #fff;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-}
-.notice {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.65;
-  margin-top: 12px;
-  word-break: keep-all;
-}
-.hidden { display: none !important; }
-
-@media (max-width: 900px) {
-  .hero-visual { opacity: .32; right: -22px; width: 280px; }
-  .hero-card { display: none; }
-  .hero-content { width: 100%; }
-}
-
-@media (max-width: 760px) {
-  .wrapper { width: min(100% - 22px, 980px); padding-top: 12px; }
-  .site-topbar { border-radius: 20px; }
-  .logo-wrap img { height: 28px; }
-  .unit-label { font-size: 13px; }
-  .topbar-chip { display: none; }
-  .hero, .panel { border-radius: 24px; padding: 22px; }
-  .hero { min-height: 320px; }
-  h1 { letter-spacing: -3px; }
-  .start-grid, .benefits, .stats { grid-template-columns: 1fr; }
-  .result-top { grid-template-columns: 1fr; }
-  .bar-row { grid-template-columns: 1fr; gap: 7px; }
-  .dashboard-header, .dashboard-title-block { align-items: stretch; flex-direction: column; }
-  .dashboard-character { display: none; }
-  .mini-card.with-character img { width: 90px; opacity: .7; }
-  .mini-card.with-character p { max-width: 100%; }
-}
-
-
-.app-bridge {
-  margin-top: 26px;
-  padding: 24px;
-  border-radius: 26px;
-  border: 1px solid rgba(0, 72, 63, 0.14);
-  background:
-    linear-gradient(135deg, rgba(0, 153, 130, 0.12), rgba(255, 255, 255, 0.92)),
-    repeating-linear-gradient(45deg, rgba(0,72,63,.05) 0 14px, rgba(0,153,130,.05) 14px 28px);
-  box-shadow: 0 18px 38px rgba(0, 72, 63, 0.08);
-}
-.app-bridge-head h3 {
-  margin: 10px 0 8px;
-  font-size: clamp(24px, 3vw, 36px);
-  letter-spacing: -1.4px;
-  color: var(--hana-deep);
-}
-.app-bridge-head p {
-  margin: 0 0 16px;
-  color: var(--muted);
-  line-height: 1.7;
-  word-break: keep-all;
-}
-.app-cta-grid {
-  display: grid;
-  grid-template-columns: 1.5fr repeat(3, auto);
-  gap: 10px;
-  align-items: center;
-  margin: 18px 0;
-}
-.app-main {
-  justify-content: center;
-  min-height: 56px;
-  font-size: 17px;
-  box-shadow: 0 18px 30px rgba(0, 153, 130, 0.23);
-}
-.btn.outline {
-  background: #fff;
-  color: var(--hana-deep);
-  border: 1px solid rgba(0,72,63,.2);
-  box-shadow: none;
-}
-.app-steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.app-steps article {
-  display: grid;
-  gap: 6px;
-  padding: 16px;
-  border-radius: 20px;
-  background: rgba(255,255,255,.82);
-  border: 1px solid rgba(0,72,63,.1);
-}
-.app-steps strong {
-  color: var(--hana-deep);
-  font-size: 16px;
-}
-.app-steps span {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.55;
-  word-break: keep-all;
-}
-@media (max-width: 760px) {
-  .app-bridge { padding: 18px; border-radius: 22px; }
-  .app-cta-grid { grid-template-columns: 1fr; }
-  .app-steps { grid-template-columns: 1fr; }
-}
-
-
-.app-cta-grid-official {
-  grid-template-columns: minmax(260px, 1fr) auto auto;
-}
-.app-official {
-  min-height: 72px;
-  font-size: clamp(20px, 3vw, 28px);
-  font-weight: 900;
-  letter-spacing: -0.9px;
-  background: linear-gradient(135deg, var(--hana-green), var(--hana-mint));
-  border: 2px solid rgba(255,255,255,.7);
-  box-shadow: 0 22px 45px rgba(0, 133, 122, 0.34), inset 0 -4px 0 rgba(0,0,0,.12);
-}
-.app-official::after {
-  content: " →";
-  font-weight: 900;
-}
-@media (max-width: 760px) {
-  .app-cta-grid-official { grid-template-columns: 1fr; }
-  .app-official { min-height: 68px; }
-}
-
-/* Final mobile-first polish: prevent hero character/text overlap and simplify landing chips */
-@media (max-width: 760px) {
-  body {
-    background-attachment: scroll;
-  }
-
-  .wrapper {
-    width: calc(100% - 20px);
-    padding: 10px 0 44px;
-  }
-
-  .site-topbar {
-    padding: 11px 12px;
-    gap: 10px;
-  }
-
-  .logo-wrap {
-    gap: 9px;
-  }
-
-  .logo-wrap img {
-    height: 27px;
-    max-width: 168px;
-    object-fit: contain;
-  }
-
-  .unit-label {
-    font-size: 12px;
-    line-height: 1.2;
-    white-space: normal;
-  }
-
-  .hero {
-    display: flex;
-    flex-direction: column;
-    min-height: auto;
-    padding: 22px 20px 18px;
-    border-radius: 28px;
-  }
-
-  .hero-content {
-    width: 100%;
-    z-index: 4;
-  }
-
-  .badge {
-    max-width: 100%;
-    font-size: 13px;
-    line-height: 1.25;
-    padding: 8px 12px;
-  }
-
-  h1 {
-    margin: 18px 0 12px;
-    font-size: clamp(42px, 13.5vw, 58px);
-    letter-spacing: -2.8px;
-    line-height: .98;
-  }
-
-  .hero-lead {
-    margin: 8px 0 10px;
-    max-width: 100%;
-    font-size: clamp(26px, 7.6vw, 34px);
-    line-height: 1.28;
-    letter-spacing: -.8px;
-  }
-
-  .hero-subtext {
-    max-width: 100%;
-    font-size: 15px;
-    line-height: 1.58;
-    letter-spacing: -.2px;
-  }
-
-  .hero-meta {
-    margin-top: 18px;
-    gap: 8px;
-  }
-
-  .hero-meta span {
-    font-size: 12px;
-    padding: 8px 10px;
-    border-radius: 12px;
-  }
-
-  .hero-visual {
-    position: relative;
-    right: auto;
-    top: auto;
-    bottom: auto;
-    width: 150px;
-    height: 112px;
-    margin: 8px 0 -4px auto;
-    opacity: .9;
-    z-index: 2;
-    align-items: center;
-  }
-
-  .hero-visual::before {
-    width: 112px;
-    height: 112px;
-    bottom: auto;
-    opacity: .6;
-  }
-
-  .hero-visual img {
-    width: 134px;
-    max-height: 108px;
-    object-fit: contain;
-  }
-
-  .hero::after {
-    right: 16px;
-    bottom: -18px;
-    font-size: 92px;
-    letter-spacing: -6px;
-    color: rgba(255,255,255,.09);
-  }
-
-  .panel {
-    padding: 20px;
-    border-radius: 24px;
-    margin-top: 14px;
-  }
-
-  .start-grid::before {
-    right: 18px;
-    top: -10px;
-    font-size: 10px;
-  }
-
-  .ration-title {
-    align-items: flex-start;
-  }
-
-  .ration-title strong {
-    font-size: 17px;
-    line-height: 1.25;
-  }
-
-  .panel h2 {
-    font-size: 25px;
-    line-height: 1.22;
-    letter-spacing: -1.2px;
-    word-break: keep-all;
-  }
-
-  .mini-card {
-    padding: 18px;
-    border-radius: 22px;
-  }
-
-  .mini-card.with-character {
-    min-height: auto;
-    padding-bottom: 116px;
-  }
-
-  .mini-card.with-character img {
-    right: 16px;
-    bottom: 12px;
-    width: 94px;
-    opacity: .88;
-  }
-
-  .mini-card.with-character p {
-    max-width: 100%;
-  }
-
-  .q-meta {
-    font-size: 13px;
-  }
-
-  .question-title {
-    font-size: 26px;
-    line-height: 1.22;
-    letter-spacing: -1.3px;
-  }
-
-  .choice {
-    padding: 16px 16px 16px 52px;
-    border-radius: 18px;
-    font-size: 15.5px;
-    line-height: 1.42;
-  }
-
-  .choice::before {
-    left: 15px;
-    width: 25px;
-    height: 25px;
-  }
-
-  .result-icon {
-    width: 86px;
-    height: 86px;
-    border-radius: 26px;
-    font-size: 42px;
-  }
-
-  .result-name {
-    font-size: 36px;
-    letter-spacing: -1.8px;
-  }
-
-  .benefit {
-    padding: 17px;
-    border-radius: 20px;
-  }
-
-  .app-bridge-head h3 {
-    font-size: 26px;
-    line-height: 1.18;
-    letter-spacing: -1.2px;
-  }
-
-  .app-bridge-head p {
-    font-size: 14.5px;
-    line-height: 1.6;
-  }
-
-  .app-official {
-    min-height: 76px;
-    font-size: 24px;
-    border-radius: 20px;
-  }
-
-  .btn.small {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .actions {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 390px) {
-  .wrapper {
-    width: calc(100% - 16px);
-  }
-
-  .logo-wrap img {
-    height: 24px;
-    max-width: 148px;
-  }
-
-  .unit-label {
-    font-size: 11px;
-  }
-
-  h1 {
-    font-size: 42px;
-    letter-spacing: -2.2px;
-  }
-
-  .hero p {
-    font-size: 15px;
-  }
-
-  .hero-visual {
-    width: 132px;
-    height: 98px;
-  }
-
-  .hero-visual img {
-    width: 118px;
-    max-height: 96px;
-  }
-}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HANA뿐인 PX | 나라사랑카드 맞춤 혜택 테스트</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="wrapper">
+    <header class="site-topbar">
+      <div class="logo-wrap">
+        <img src="./assets/images/hana-logo-white.png" alt="하나금융그룹" />
+        <span class="unit-label">SMART 홍보대사 20기</span>
+      </div>
+      <span class="topbar-chip">PX BENEFIT MISSION</span>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <span class="badge">🪖 나라사랑카드 혜택 보급소</span>
+        <h1>HANA뿐인 PX</h1>
+        <h2 class="hero-lead">나에게 맞는 나라사랑카드 혜택 알아보자!</h2>
+        <p class="hero-subtext">간단한 질문을 통해 내 군생활 소비패턴에 맞는 하나은행 나라사랑카드 혜택을 알려드립니다.</p>
+        <div class="hero-meta">
+          <span>소요시간 약 1분</span>
+          <span>QR 참여 가능</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <small>MISSION CARD</small>
+        <strong>나에게 맞는 혜택 찾기</strong>
+      </div>
+      <div class="hero-visual"><img src="./assets/images/hana-character-hero.png" alt="하나금융그룹 캐릭터" /></div>
+    </section>
+
+    <section id="start" class="panel start-grid">
+      <div>
+        <div class="ration-title">
+          <strong>오늘의 보급 미션</strong>
+          <span class="tag">약 1분</span>
+        </div>
+        <h2>내 군 생활 소비패턴에 맞는 혜택을 찾아보세요.</h2>
+        <p class="notice">참여코드 없이 바로 시작합니다. Supabase를 연결하면 결과가 대시보드에 자동 집계되고, 연결 전에는 현재 브라우저에만 임시 저장됩니다.</p>
+        <button id="startBtn" class="btn">테스트 시작하기</button>
+      </div>
+      <div class="mini-card with-character">
+        <div class="ration-title">
+          <strong>PX 메뉴판</strong>
+          <span class="tag">HANA</span>
+        </div>
+        <p>PX · 교통 · 배달/외식 · 온라인 쇼핑 · 문화생활 · 자산관리 성향을 분석합니다.</p>
+        <p class="notice">부스 QR에 이 페이지 주소를 연결하면 바로 테스트 화면으로 진입합니다.</p>
+        <img src="./assets/images/hana-character-guide.png" alt="하나금융그룹 캐릭터" />
+      </div>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="q-meta">
+        <span id="qCount">Q1 / 10</span>
+        <span>혜택 추천 진행 중</span>
+      </div>
+      <div class="progress-wrap"><div id="progress" class="progress-bar"></div></div>
+      <h2 id="question" class="question-title"></h2>
+      <div id="choices" class="choices"></div>
+    </section>
+
+    <section id="result" class="panel hidden"></section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script src="./data.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const state = { index: 0, answers: [], scores: {}, benefitScores: {} };
+
+    const supabaseClient = (() => {
+      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+      if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || !window.supabase) return null;
+      return window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    })();
+
+    function resetScores() {
+      Object.keys(HANA_PX_DATA.categories).forEach(key => state.scores[key] = 0);
+      Object.keys(HANA_PX_DATA.benefits).forEach(key => state.benefitScores[key] = 0);
+    }
+
+    function startQuiz() {
+      state.index = 0;
+      state.answers = [];
+      resetScores();
+      $("start").classList.add("hidden");
+      $("result").classList.add("hidden");
+      $("quiz").classList.remove("hidden");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const total = HANA_PX_DATA.questions.length;
+      const q = HANA_PX_DATA.questions[state.index];
+      $("qCount").textContent = `Q${state.index + 1} / ${total}`;
+      $("progress").style.width = `${(state.index / total) * 100}%`;
+      $("question").textContent = q.text;
+      $("choices").innerHTML = "";
+      q.choices.forEach((choice, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.textContent = choice.text;
+        btn.addEventListener("click", () => selectChoice(idx));
+        $("choices").appendChild(btn);
+      });
+    }
+
+    function selectChoice(choiceIndex) {
+      const q = HANA_PX_DATA.questions[state.index];
+      const choice = q.choices[choiceIndex];
+      state.answers.push({ questionId: q.id, question: q.text, choice: choice.text });
+      Object.entries(choice.scores || {}).forEach(([key, value]) => {
+        state.scores[key] = (state.scores[key] || 0) + value;
+      });
+      (choice.benefits || []).forEach(key => {
+        state.benefitScores[key] = (state.benefitScores[key] || 0) + 1;
+      });
+      state.index += 1;
+      if (state.index >= HANA_PX_DATA.questions.length) finishQuiz();
+      else renderQuestion();
+    }
+
+    function calculateResult() {
+      const categoryKey = Object.entries(state.scores).sort((a, b) => b[1] - a[1])[0][0];
+      const topBenefits = Object.entries(state.benefitScores)
+        .sort((a, b) => b[1] - a[1])
+        .filter(([, score]) => score > 0)
+        .slice(0, 4)
+        .map(([key]) => key);
+      while (topBenefits.length < 4) {
+        const fallback = Object.keys(HANA_PX_DATA.benefits).find(key => !topBenefits.includes(key));
+        if (!fallback) break;
+        topBenefits.push(fallback);
+      }
+      return {
+        campaign_id: HANA_PX_DATA.campaignId,
+        result_type: HANA_PX_DATA.categories[categoryKey].name,
+        result_category: categoryKey,
+        top_benefit_ids: topBenefits,
+        scores: state.scores,
+        benefit_scores: state.benefitScores,
+        answers: state.answers,
+        created_at: new Date().toISOString()
+      };
+    }
+
+    async function finishQuiz() {
+      $("progress").style.width = "100%";
+      const result = calculateResult();
+      await saveResult(result);
+      renderResult(result);
+      $("quiz").classList.add("hidden");
+      $("result").classList.remove("hidden");
+    }
+
+    async function saveResult(result) {
+      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+      const localKey = "hana_px_results";
+      const localResults = JSON.parse(localStorage.getItem(localKey) || "[]");
+      localResults.push(result);
+      localStorage.setItem(localKey, JSON.stringify(localResults));
+
+      if (!supabaseClient) return;
+      try {
+        await supabaseClient.from(cfg.tableName).insert({
+          campaign_id: result.campaign_id,
+          result_type: result.result_type,
+          result_category: result.result_category,
+          top_benefit_ids: result.top_benefit_ids,
+          scores: result.scores,
+          benefit_scores: result.benefit_scores,
+          answers: result.answers,
+          user_agent: navigator.userAgent
+        });
+      } catch (e) {
+        console.warn("Supabase 저장 실패. localStorage에는 저장됨.", e);
+      }
+    }
+
+
+    function getAppLinkSet() {
+      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+      const links = cfg.appLinks || {};
+      return {
+        officialOneQ: links.officialOneQ || "https://m.site.naver.com/2c2Wd",
+        android: links.android || "https://play.google.com/store/apps/details?id=com.hanabank.oqf&hl=ko",
+        ios: links.ios || "https://apps.apple.com/kr/app/id6743190232",
+        guide: links.guide || "https://www.kebhana.com/cont/smartapp/smartapp14/smartapp1401/index.jsp",
+        lounge: links.lounge || "https://m.kebhana.com/cont/app/app01/index.jsp"
+      };
+    }
+
+    function recordOneQClick() {
+      const key = "hana_px_oneq_clicks";
+      const clicks = JSON.parse(localStorage.getItem(key) || "[]");
+      clicks.push({ clicked_at: new Date().toISOString(), link: getAppLinkSet().officialOneQ });
+      localStorage.setItem(key, JSON.stringify(clicks));
+    }
+
+    function renderResult(result) {
+      const category = HANA_PX_DATA.categories[result.result_category];
+      const benefitHtml = result.top_benefit_ids.map(key => {
+        const benefit = HANA_PX_DATA.benefits[key];
+        return `
+          <article class="benefit">
+            <span class="tag">${benefit.tag}</span>
+            <h3>${benefit.title}</h3>
+            <p>${benefit.description}</p>
+          </article>
+        `;
+      }).join("");
+      const appLinks = getAppLinkSet();
+
+      $("result").innerHTML = `
+        <div class="result-top">
+          <div class="result-icon">${category.icon}</div>
+          <div>
+            <p class="tag">나의 나라사랑카드 혜택 유형</p>
+            <h2 class="result-name">${category.name}</h2>
+            <p>${category.description}</p>
+          </div>
+        </div>
+        <h3 class="section-title">추천 혜택 보급품</h3>
+        <div class="benefits">${benefitHtml}</div>
+        <section class="app-bridge">
+          <div class="app-bridge-head">
+            <span class="tag">MISSION COMPLETE</span>
+            <h3>이제 하나원큐 앱으로 바로 접속해보세요</h3>
+            <p>아래 버튼을 누르면 사무국에서 제공한 QR코드의 실제 연결 주소로 이동합니다.</p>
+          </div>
+          <div class="app-cta-grid app-cta-grid-official">
+            <a class="btn app-main app-official" href="${appLinks.officialOneQ}" target="_blank" rel="noopener" onclick="recordOneQClick()">하나원큐 접속하기</a>
+            <a class="btn small secondary" href="${appLinks.android}" target="_blank" rel="noopener">설치가 안 될 때</a>
+            <a class="btn small outline" href="${appLinks.guide}" target="_blank" rel="noopener">앱 이용 등록 가이드</a>
+          </div>
+          <div class="app-steps">
+            <article><strong>01 하나원큐 접속</strong><span>사무국 QR 링크로 앱 실행 또는 안내 페이지 이동</span></article>
+            <article><strong>02 앱 이용 확인</strong><span>설치가 되어 있으면 앱을 열고, 미설치 시 스토어 안내에 따라 설치</span></article>
+            <article><strong>03 혜택 확인</strong><span>나라사랑카드와 NEW 하나원큐 관련 안내를 확인</span></article>
+          </div>
+        </section>
+        <div class="actions">
+          <button class="btn small" onclick="startQuiz()">다시 테스트하기</button>
+        </div>
+        <p class="notice">실제 카드 혜택은 발급 조건, 전월 실적, 이용처, 기간에 따라 달라질 수 있으므로 행사 전 공식 안내 기준으로 최종 확인하세요.</p>
+      `;
+    }
+
+    $("startBtn").addEventListener("click", startQuiz);
+    resetScores();
+  </script>
+</body>
+</html>
