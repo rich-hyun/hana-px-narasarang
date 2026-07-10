@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HANA뿐인 PX | 대시보드</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="wrapper">
+    <header class="site-topbar">
+      <div class="logo-wrap">
+        <img src="./hana-logo-white.png" alt="하나금융그룹" />
+        <span class="unit-label">HANA뿐인 PX 운영본부</span>
+      </div>
+      <span class="topbar-chip">DASHBOARD</span>
+    </header>
+
+    <section id="authPanel" class="panel auth-panel">
+      <div class="dashboard-title-block auth-title-block">
+        <img class="dashboard-character" src="./hana-character-dashboard.png" alt="하나금융그룹 캐릭터" />
+        <div>
+          <span class="badge">🔐 HANA뿐인 PX 통계본부</span>
+          <h1>운영자 인증</h1>
+          <p class="notice">참여 통계 대시보드는 운영자만 확인할 수 있습니다.</p>
+        </div>
+      </div>
+      <form id="passwordForm" class="password-form" autocomplete="off">
+        <label for="dashboardPassword">대시보드 비밀번호</label>
+        <div class="password-row">
+          <input id="dashboardPassword" type="password" placeholder="비밀번호 입력" autocomplete="off" />
+          <button class="btn small" type="submit">입장</button>
+        </div>
+        <p id="passwordError" class="auth-error hidden">비밀번호가 맞지 않습니다.</p>
+      </form>
+      <a class="btn small secondary auth-back" href="./index.html" style="text-decoration:none;">테스트 페이지로 돌아가기</a>
+    </section>
+
+    <section id="dashboardPanel" class="panel hidden">
+      <div class="dashboard-header">
+        <div class="dashboard-title-block">
+          <img class="dashboard-character" src="./hana-character-dashboard.png" alt="하나금융그룹 캐릭터" />
+          <div>
+            <span class="badge">📊 HANA뿐인 PX 통계본부</span>
+            <h1>참여 통계 대시보드</h1>
+            <p id="sourceText" class="notice">데이터를 불러오는 중입니다.</p>
+          </div>
+        </div>
+        <div class="actions" style="margin:0;">
+          <a class="btn small secondary" href="./index.html" style="text-decoration:none;">테스트 페이지</a>
+          <button class="btn small" onclick="loadData()">새로고침</button>
+          <button class="btn small secondary" onclick="lockDashboard()">잠금</button>
+        </div>
+      </div>
+
+      <div id="stats" class="stats"></div>
+
+      <h2 class="section-title">결과 유형 분포</h2>
+      <div id="typeBars" class="bar-list"></div>
+
+      <h2 class="section-title">선호 혜택 TOP</h2>
+      <div id="benefitBars" class="bar-list"></div>
+
+      <h2 class="section-title">질문별 선택 현황</h2>
+      <div id="questionBars" class="bar-list"></div>
+
+      <h2 class="section-title">최근 참여 기록</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>시간</th>
+              <th>결과 유형</th>
+              <th>추천 혜택</th>
+            </tr>
+          </thead>
+          <tbody id="recentRows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config.js"></script>
+  <script src="./data.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+    const DASHBOARD_PASSWORD = cfg.dashboardPassword || "hana0706";
+    const AUTH_KEY = "hana_px_dashboard_auth";
+    const supabaseClient = cfg.supabaseUrl && cfg.supabaseAnonKey && window.supabase
+      ? window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey)
+      : null;
+
+    function unlockDashboard() {
+      sessionStorage.setItem(AUTH_KEY, "1");
+      $("authPanel").classList.add("hidden");
+      $("dashboardPanel").classList.remove("hidden");
+      loadData();
+    }
+
+    function lockDashboard() {
+      sessionStorage.removeItem(AUTH_KEY);
+      $("dashboardPanel").classList.add("hidden");
+      $("authPanel").classList.remove("hidden");
+      $("dashboardPassword").value = "";
+      $("dashboardPassword").focus();
+    }
+
+    function initAuth() {
+      $("passwordForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const input = $("dashboardPassword").value.trim();
+        if (input === DASHBOARD_PASSWORD) {
+          $("passwordError").classList.add("hidden");
+          unlockDashboard();
+          return;
+        }
+        $("passwordError").classList.remove("hidden");
+        $("dashboardPassword").select();
+      });
+
+      if (sessionStorage.getItem(AUTH_KEY) === "1") {
+        unlockDashboard();
+      } else {
+        $("dashboardPassword").focus();
+      }
+    }
+
+    function countBy(items, getter) {
+      return items.reduce((acc, item) => {
+        const key = getter(item);
+        if (!key) return acc;
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+    }
+
+    function sortEntries(obj) {
+      return Object.entries(obj).sort((a, b) => b[1] - a[1]);
+    }
+
+    function todayCount(items) {
+      const today = new Date().toISOString().slice(0, 10);
+      return items.filter(item => (item.created_at || "").slice(0, 10) === today).length;
+    }
+
+    function benefitName(id) {
+      return HANA_PX_DATA.benefits[id]?.title || id;
+    }
+
+    function renderStats(items) {
+      const typeCounts = countBy(items, item => item.result_type);
+      const benefitCounts = {};
+      items.forEach(item => (item.top_benefit_ids || []).forEach(id => benefitCounts[id] = (benefitCounts[id] || 0) + 1));
+      const topType = sortEntries(typeCounts)[0]?.[0] || "-";
+      const topBenefit = benefitName(sortEntries(benefitCounts)[0]?.[0]) || "-";
+      $("stats").innerHTML = `
+        <div class="stat"><small>총 참여자</small><strong>${items.length}</strong></div>
+        <div class="stat"><small>오늘 참여자</small><strong>${todayCount(items)}</strong></div>
+        <div class="stat"><small>1위 유형</small><strong style="font-size:21px;">${topType}</strong></div>
+        <div class="stat"><small>1위 혜택</small><strong style="font-size:19px;">${topBenefit}</strong></div>
+      `;
+    }
+
+    function renderBars(targetId, entries, labeler = x => x, maxCount = null) {
+      const max = maxCount || Math.max(1, ...entries.map(([, count]) => count));
+      if (!entries.length) {
+        $(targetId).innerHTML = `<div class="empty">아직 데이터가 없습니다.</div>`;
+        return;
+      }
+      $(targetId).innerHTML = entries.map(([key, count]) => `
+        <div class="bar-row">
+          <div class="bar-label">${labeler(key)}</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:${Math.max(4, (count / max) * 100)}%"></div></div>
+          <div><strong>${count}</strong></div>
+        </div>
+      `).join("");
+    }
+
+    function renderQuestionBars(items) {
+      const rows = [];
+      HANA_PX_DATA.questions.forEach(q => {
+        const counts = {};
+        items.forEach(item => {
+          const answer = (item.answers || []).find(a => a.questionId === q.id);
+          if (answer) counts[answer.choice] = (counts[answer.choice] || 0) + 1;
+        });
+        sortEntries(counts).forEach(([choice, count]) => rows.push([`${q.id.toUpperCase()} · ${choice}`, count]));
+      });
+      renderBars("questionBars", rows.slice(0, 20), x => x, Math.max(1, ...rows.map(([, c]) => c)));
+    }
+
+    function renderRecent(items) {
+      const rows = items
+        .slice()
+        .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
+        .slice(0, 20)
+        .map(item => {
+          const time = item.created_at ? new Date(item.created_at).toLocaleString("ko-KR") : "-";
+          const benefits = (item.top_benefit_ids || []).map(benefitName).join(", ");
+          return `<tr><td>${time}</td><td>${item.result_type || "-"}</td><td>${benefits}</td></tr>`;
+        }).join("");
+      $("recentRows").innerHTML = rows || `<tr><td colspan="3">아직 데이터가 없습니다.</td></tr>`;
+    }
+
+    async function fetchResults() {
+      if (supabaseClient) {
+        const { data, error } = await supabaseClient
+          .from(cfg.tableName)
+          .select("*")
+          .eq("campaign_id", HANA_PX_DATA.campaignId)
+          .order("created_at", { ascending: false })
+          .limit(5000);
+        if (!error) {
+          $("sourceText").textContent = "Supabase 데이터 기준으로 집계 중입니다.";
+          return data || [];
+        }
+        console.warn(error);
+      }
+      $("sourceText").textContent = "Supabase 미연결 상태입니다. 현재 브라우저 localStorage 데이터만 표시합니다.";
+      return JSON.parse(localStorage.getItem("hana_px_results") || "[]");
+    }
+
+    async function loadData() {
+      const items = await fetchResults();
+      renderStats(items);
+      renderBars("typeBars", sortEntries(countBy(items, item => item.result_type)));
+      const benefitCounts = {};
+      items.forEach(item => (item.top_benefit_ids || []).forEach(id => benefitCounts[id] = (benefitCounts[id] || 0) + 1));
+      renderBars("benefitBars", sortEntries(benefitCounts).slice(0, 10), benefitName);
+      renderQuestionBars(items);
+      renderRecent(items);
+    }
+
+    initAuth();
+  </script>
+</body>
+</html>
