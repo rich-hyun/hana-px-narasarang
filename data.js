@@ -1,4 +1,4 @@
-const HANA_PX_DATA = {
+window.HANA_PX_DATA = {
   campaignId: "hana-px-2026-0718",
   title: "HANA뿐인 PX",
   subtitle: "나라사랑카드 맞춤 혜택 보급소",
