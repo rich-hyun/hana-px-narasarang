@@ -158,8 +158,8 @@
           <div class="kpi-num" id="kpiTopType" style="font-size:20px;">-</div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">하나원큐 클릭 <span title="이 기기 브라우저 기준">ⓘ</span></div>
-          <div class="kpi-num" id="kpiClicks">0<small> 회</small></div>
+          <div class="kpi-label">하나원큐 전환</div>
+          <div class="kpi-num" id="kpiClicks">0<small> 명</small></div>
         </div>
       </section>
 
@@ -209,12 +209,12 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./config.js?v=20260715-3"></script>
-  <script src="./data.js?v=20260715-3"></script>
+  <script src="./config.js?v=20020706"></script>
+  <script src="./data.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
-    const CFG = window.HANA_PX_CONFIG || {};
-    const DATA = window.HANA_PX_DATA || {};
+    const CFG = window.HANA_PX_CONFIG || (typeof HANA_PX_CONFIG !== "undefined" ? HANA_PX_CONFIG : {});
+    const DATA = window.HANA_PX_DATA || (typeof HANA_PX_DATA !== "undefined" ? HANA_PX_DATA : {});
 
     const supabaseClient = (() => {
       if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase) return null;
@@ -230,10 +230,8 @@
       loadAndRender();
     }
     function tryLogin() {
-      const val = $("pw").value.trim();
-      const password = String(CFG.dashboardPassword || "").trim();
-      
-      if (val === password) {
+      const val = $("pw").value;
+      if (val === CFG.dashboardPassword) {
         sessionStorage.setItem("hana_px_admin", "1");
         $("gateErr").textContent = "";
         unlock();
@@ -318,7 +316,9 @@
       // KPI
       $("kpiTotal").innerHTML = `${total}<small> 명</small>`;
       $("kpiToday").innerHTML = `${rows.filter(r => isToday(r.created_at)).length}<small> 명</small>`;
-      $("kpiClicks").innerHTML = `${getClicks()}<small> 회</small>`;
+      const oneqClicked = rows.filter(r => r.oneq_clicked).length;
+      const oneqRate = total ? Math.round(oneqClicked / total * 100) : 0;
+      $("kpiClicks").innerHTML = `${oneqClicked}<small> 명 · ${oneqRate}%</small>`;
 
       // 유형 분포 (모든 카테고리 기준)
       const cats = DATA.categories || {};
