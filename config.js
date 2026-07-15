@@ -2,7 +2,7 @@ window.HANA_PX_CONFIG = {
   supabaseUrl: "https://ufxcllrshgwritsgkcxf.supabase.co",
   supabaseAnonKey: "sb_publishable_rqCOaj5Fx2umYbIq21l7HQ_0Q_XeSeR",
   tableName: "hana_px_results",
-  dashboardPassword: "20020706",
+  dashboardPassword: "hana0706",
   appLinks: {
     officialOneQ: "https://m.site.naver.com/2c2Wd",
     android: "https://play.google.com/store/apps/details?id=com.hanabank.oqf&hl=ko",
