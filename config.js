@@ -1,6 +1,6 @@
 const HANA_PX_CONFIG = {
-  supabaseUrl: "",
-  supabaseAnonKey: "",
+  supabaseUrl: "https://ufxcllrshgwritsgkcxf.supabase.co",
+  supabaseAnonKey: "sb_publishable_rqCOaj5Fx2umYbIq21l7HQ_0Q_XeSeR",
   tableName: "hana_px_results",
   dashboardPassword: "hana0706",
   appLinks: {
