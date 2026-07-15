@@ -604,3 +604,349 @@ button { font-family: inherit; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* ============================================================
+   2026-07-15 모바일 설문 화면 보정
+   - 상단 로고/문구 겹침 제거
+   - 가로 스크롤 및 버튼 잘림 방지
+   - 첫 화면 높이와 글자 크기 축소
+   - Android/iOS 인앱 브라우저 대응
+   ============================================================ */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  min-width: 0;
+}
+
+.wrapper,
+.site-topbar,
+.logo-wrap,
+.hero,
+.hero-content,
+.hero-card,
+.panel,
+.start-grid,
+.mini-card,
+#quiz,
+#result {
+  min-width: 0;
+}
+
+button,
+a,
+input {
+  max-width: 100%;
+}
+
+.hero h1,
+.hero-lead,
+.hero-subtext,
+.hero-card strong,
+.panel h2,
+.question-title,
+.choice,
+.result-name,
+.benefit h3,
+.benefit p {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 719px) {
+  :root {
+    --radius: 16px;
+  }
+
+  .wrapper {
+    width: 100%;
+    padding: max(12px, env(safe-area-inset-top)) 12px calc(42px + env(safe-area-inset-bottom));
+    gap: 12px;
+  }
+
+  /* 상단바: 모바일에서는 2줄 구조로 분리 */
+  .site-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 9px;
+    padding: 13px 14px;
+    border-radius: 18px;
+  }
+
+  .logo-wrap {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-wrap img {
+    width: min(178px, 100%);
+    height: auto;
+    max-height: 27px;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  .unit-label {
+    min-width: 0;
+    max-width: 126px;
+    padding-left: 9px;
+    font-size: 9.5px;
+    line-height: 1.25;
+    letter-spacing: 0;
+    white-space: normal;
+    text-align: right;
+  }
+
+  .topbar-chip {
+    display: block;
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 9.5px;
+    line-height: 1.2;
+    letter-spacing: .1em;
+    text-align: center;
+    white-space: normal;
+  }
+
+  /* 첫 화면을 모바일 화면 안에 더 자연스럽게 배치 */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+    padding: 24px 18px 18px;
+    border-radius: 20px;
+  }
+
+  .badge {
+    max-width: 100%;
+    margin-bottom: 12px;
+    padding: 6px 11px;
+    font-size: 12px;
+    line-height: 1.35;
+    white-space: normal;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.9rem, 10vw, 2.45rem);
+    line-height: 1.08;
+  }
+
+  .hero-lead {
+    margin-top: 10px;
+    font-size: clamp(.98rem, 4.7vw, 1.18rem);
+    line-height: 1.38;
+  }
+
+  .hero-subtext {
+    margin-top: 9px;
+    max-width: none;
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  .hero-meta {
+    gap: 7px;
+    margin-top: 15px;
+  }
+
+  .hero-meta span {
+    padding: 6px 10px;
+    font-size: 11.5px;
+  }
+
+  .hero-card {
+    width: 100%;
+    padding: 14px 16px;
+    border-left-width: 5px;
+    border-radius: 14px;
+  }
+
+  .hero-card small {
+    font-size: 10px;
+    letter-spacing: .14em;
+  }
+
+  .hero-card strong {
+    margin-top: 5px;
+    font-size: 18px;
+    line-height: 1.35;
+  }
+
+  .hero-visual {
+    min-height: 0;
+    margin: -3px auto -18px;
+  }
+
+  .hero-visual img {
+    width: min(148px, 44vw);
+    max-height: 160px;
+    object-fit: contain;
+    object-position: center bottom;
+  }
+
+  .panel {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+
+  .panel h2 {
+    font-size: clamp(1.12rem, 5.1vw, 1.35rem);
+    line-height: 1.38;
+  }
+
+  .start-grid {
+    gap: 15px;
+  }
+
+  .ration-title {
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 9px;
+  }
+
+  .notice {
+    margin-top: 10px;
+    padding-left: 10px;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  #startBtn {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 15px;
+  }
+
+  .mini-card {
+    padding: 16px;
+  }
+
+  .mini-card.with-character img {
+    width: min(120px, 42%);
+    margin-top: 10px;
+  }
+
+  /* 설문 문항 */
+  .q-meta {
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .progress-wrap {
+    height: 10px;
+    margin-bottom: 16px;
+  }
+
+  .question-title {
+    margin-bottom: 14px;
+    font-size: clamp(1.12rem, 5.2vw, 1.38rem);
+    line-height: 1.42;
+  }
+
+  .choices {
+    gap: 10px;
+  }
+
+  .choice {
+    width: 100%;
+    min-height: 54px;
+    padding: 14px 15px;
+    font-size: 14.5px;
+    line-height: 1.42;
+    border-radius: 13px;
+  }
+
+  /* 결과 화면 */
+  .result-top {
+    align-items: flex-start;
+    gap: 13px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .result-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 31px;
+    border-radius: 15px;
+  }
+
+  .result-name {
+    font-size: clamp(1.35rem, 7vw, 1.75rem);
+  }
+
+  .benefit,
+  .app-bridge {
+    padding: 15px;
+  }
+
+  .app-cta-grid-official {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-cta-grid-official .app-main {
+    grid-column: auto;
+  }
+
+  .app-cta-grid .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 370px) {
+  .wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .site-topbar {
+    padding: 12px;
+  }
+
+  .logo-wrap {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .logo-wrap img {
+    width: min(168px, 72vw);
+  }
+
+  .unit-label {
+    max-width: none;
+    padding: 6px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, .2);
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero h1 {
+    font-size: 1.82rem;
+  }
+
+  .hero-meta span {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .result-top {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
