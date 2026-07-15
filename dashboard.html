@@ -209,7 +209,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./config.js"></script>
+  <script src="./config.js?v=20260715-2"></script>
   <script src="./data.js"></script>
   <script>
     const $ = (id) => document.getElementById(id);
@@ -230,8 +230,10 @@
       loadAndRender();
     }
     function tryLogin() {
-      const val = $("pw").value;
-      if (val === CFG.dashboardPassword) {
+      const val = $("pw").value.trim();
+      const password = String(CFG.dashboardPassword || "").trim();
+      
+      if (val === password) {
         sessionStorage.setItem("hana_px_admin", "1");
         $("gateErr").textContent = "";
         unlock();
