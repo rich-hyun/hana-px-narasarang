@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HANA뿐인 PX | 결과 대시보드</title>
   <link rel="icon" type="image/png" href="./hana-symbol.png" />
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./style.css?v=20260720-2" />
   <style>
     /* ---------- 대시보드 전용 스타일 (토큰은 style.css 재사용) ---------- */
     .dash-topbar { flex-wrap: wrap; row-gap: 10px; }
@@ -210,7 +210,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./config.js?v=20020706"></script>
-  <script src="./data.js"></script>
+  <script src="./data.js?v=20260720-2"></script>
   <script>
     const $ = (id) => document.getElementById(id);
     const CFG = window.HANA_PX_CONFIG || (typeof HANA_PX_CONFIG !== "undefined" ? HANA_PX_CONFIG : {});

@@ -106,7 +106,7 @@ button { font-family: inherit; }
 .logo-wrap { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .logo-wrap img { height: 24px; width: auto; }
 .smart20-wrap { gap: 0; }
-.smart20-logo { height: 30px !important; width: auto; display: block; }
+.smart20-logo { height: 28px !important; width: auto; max-width: min(440px, 58vw); display: block; object-fit: contain; object-position: left center; }
 .unit-label {
   font-size: 11px;
   color: rgba(255, 255, 255, .78);
@@ -926,7 +926,9 @@ input {
   }
 
   .smart20-logo {
-    height: 26px !important;
+    width: min(100%, 330px) !important;
+    height: auto !important;
+    max-height: 28px;
   }
 
   .unit-label {
