@@ -1,389 +1,197 @@
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HANA뿐인 PX | 결과 대시보드</title>
-  <link rel="icon" type="image/png" href="./hana-symbol.png" />
-  <link rel="stylesheet" href="./style.css?v=20260720-2" />
-  <style>
-    /* ---------- 대시보드 전용 스타일 (토큰은 style.css 재사용) ---------- */
-    .dash-topbar { flex-wrap: wrap; row-gap: 10px; }
-    .dash-topbar .title-group { display: flex; align-items: center; gap: 12px; min-width: 0; }
-    .dash-topbar .title-group img { height: 34px; width: auto; }
-    .dash-topbar h1 { color: #fff; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
-    .dash-topbar .sub { color: rgba(255,255,255,.72); font-size: 12px; }
-
-    /* 로그인 게이트 */
-    .gate { display: grid; place-items: center; min-height: 60vh; }
-    .gate-card {
-      width: min(420px, 100%);
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 30px 26px;
-      box-shadow: var(--shadow-md);
-      text-align: center;
+window.HANA_PX_DATA = {
+  campaignId: "hana-px-2026-0718",
+  title: "HANA뿐인 PX",
+  subtitle: "나라사랑카드 맞춤 혜택 보급소",
+  categories: {
+    px: {
+      name: "PX 보급왕",
+      icon: "🪖",
+      description: "군마트·편의점·생활비 절약에 가장 민감한 실속형입니다.",
+      color: "#00856f"
+    },
+    transport: {
+      name: "휴가 기동대",
+      icon: "🚌",
+      description: "외출·외박·휴가 때 교통비와 이동 편의성을 가장 중요하게 봅니다.",
+      color: "#1976d2"
+    },
+    food: {
+      name: "외식 작전반",
+      icon: "🍔",
+      description: "배달, 외식, 카페처럼 먹는 즐거움을 놓치지 않는 타입입니다.",
+      color: "#f59e0b"
+    },
+    digital: {
+      name: "디지털 통신병",
+      icon: "📱",
+      description: "모바일 결제, 앱, 온라인 쇼핑, 구독 서비스를 자주 활용하는 타입입니다.",
+      color: "#7c3aed"
+    },
+    culture: {
+      name: "문화 생활병",
+      icon: "🎬",
+      description: "영화, 스포츠, 여가 활동에서 혜택을 잘 챙기는 타입입니다.",
+      color: "#e11d48"
+    },
+    saving: {
+      name: "월급 관리관",
+      icon: "💰",
+      description: "군 급여, 자동이체, 저축처럼 돈 관리에 관심이 많은 타입입니다.",
+      color: "#0f766e"
     }
-    .gate-card .lock { font-size: 34px; }
-    .gate-card h2 { margin-top: 10px; font-size: 20px; font-weight: 800; color: var(--teal-900); }
-    .gate-card p { margin-top: 8px; font-size: 13.5px; color: var(--muted); }
-    .gate-field { margin-top: 20px; display: grid; gap: 10px; }
-    .gate-field input {
-      width: 100%;
-      font-size: 16px;
-      padding: 14px 16px;
-      border: 1.5px solid var(--line);
-      border-radius: 12px;
-      background: var(--card-2);
-      color: var(--ink);
+  },
+  benefits: {
+    px_cashback: {
+      title: "군마트/PX 캐시백",
+      tag: "PX",
+      description: "군 생활 중 자주 쓰는 PX 소비를 줄여주는 핵심 생활 혜택입니다."
+    },
+    cu_discount: {
+      title: "CU 편의점 혜택",
+      tag: "편의점",
+      description: "외출·외박 때 간식, 음료, 생활용품 구매에 어울리는 혜택입니다."
+    },
+    transport_cashback: {
+      title: "대중교통·택시 혜택",
+      tag: "이동",
+      description: "휴가 복귀, 외출 이동, 시내 이동이 많은 사람에게 잘 맞는 혜택입니다."
+    },
+    delivery_food: {
+      title: "배달·외식 혜택",
+      tag: "식비",
+      description: "휴가 중 친구를 만나거나 배달 음식을 자주 이용할 때 유용한 혜택입니다."
+    },
+    online_shopping: {
+      title: "쿠팡·온라인 쇼핑 혜택",
+      tag: "쇼핑",
+      description: "생활용품, 전자기기, 선물 구매를 온라인으로 해결하는 사람에게 추천됩니다."
+    },
+    digital_life: {
+      title: "NEW 하나원큐 앱 활용",
+      tag: "앱",
+      description: "계좌 조회, 이체, 카드 관리 등 금융 업무를 모바일로 빠르게 처리할 수 있습니다."
+    },
+    movie_culture: {
+      title: "영화·문화 혜택",
+      tag: "문화",
+      description: "휴가나 외출 때 영화, 여가 활동을 즐기는 사람에게 잘 맞습니다."
+    },
+    sports_event: {
+      title: "스포츠 관람·이벤트 혜택",
+      tag: "스포츠",
+      description: "경기장 방문, 현장 이벤트, 응원 활동과 함께 소개하기 좋은 혜택입니다."
+    },
+    salary_management: {
+      title: "군 급여·자산관리",
+      tag: "관리",
+      description: "군 급여 입금 후 소비와 저축을 나눠 관리하고 싶은 사람에게 적합합니다."
+    },
+    auto_payment: {
+      title: "자동이체·고정비 관리",
+      tag: "고정비",
+      description: "통신비, 구독료, 자동이체처럼 매달 나가는 돈을 관리할 때 유용합니다."
     }
-    .gate-field input:focus { outline: none; border-color: var(--teal-400); background: #fff; }
-    .gate-err { color: #c0392b; font-size: 13px; min-height: 18px; margin-top: 4px; }
-
-    /* 소스 표시 */
-    .source-pill {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 12px; font-weight: 700; letter-spacing: .02em;
-      padding: 7px 13px; border-radius: var(--radius-pill);
+  },
+  questions: [
+    {
+      id: "q1",
+      text: "군 생활에서 가장 아깝다고 느끼는 지출은?",
+      choices: [
+        { text: "PX에서 자주 사는 간식·생활용품", scores: { px: 3 }, benefits: ["px_cashback", "cu_discount"] },
+        { text: "휴가 때 왕복 교통비", scores: { transport: 3 }, benefits: ["transport_cashback"] },
+        { text: "배달·외식 비용", scores: { food: 3 }, benefits: ["delivery_food"] },
+        { text: "온라인 쇼핑·구독 결제", scores: { digital: 3 }, benefits: ["online_shopping", "digital_life"] }
+      ]
+    },
+    {
+      id: "q2",
+      text: "휴가 첫날, 가장 먼저 하고 싶은 것은?",
+      choices: [
+        { text: "집 가는 길 교통비부터 아끼기", scores: { transport: 3 }, benefits: ["transport_cashback"] },
+        { text: "친구들과 맛있는 음식 먹기", scores: { food: 3 }, benefits: ["delivery_food"] },
+        { text: "영화 보거나 경기 보러 가기", scores: { culture: 3 }, benefits: ["movie_culture", "sports_event"] },
+        { text: "필요한 물건 온라인으로 주문하기", scores: { digital: 2, px: 1 }, benefits: ["online_shopping"] }
+      ]
+    },
+    {
+      id: "q3",
+      text: "나라사랑카드에서 가장 끌리는 키워드는?",
+      choices: [
+        { text: "PX", scores: { px: 3 }, benefits: ["px_cashback"] },
+        { text: "교통", scores: { transport: 3 }, benefits: ["transport_cashback"] },
+        { text: "배달/외식", scores: { food: 3 }, benefits: ["delivery_food"] },
+        { text: "모바일 금융", scores: { digital: 2, saving: 1 }, benefits: ["digital_life", "salary_management"] }
+      ]
+    },
+    {
+      id: "q4",
+      text: "평소 소비 스타일에 가까운 것은?",
+      choices: [
+        { text: "소액을 자주 쓴다", scores: { px: 2, food: 1 }, benefits: ["px_cashback", "cu_discount"] },
+        { text: "한 번 쓸 때 크게 쓴다", scores: { digital: 2, culture: 1 }, benefits: ["online_shopping", "movie_culture"] },
+        { text: "이동할 때 돈이 많이 든다", scores: { transport: 3 }, benefits: ["transport_cashback"] },
+        { text: "돈을 모으는 게 더 중요하다", scores: { saving: 3 }, benefits: ["salary_management", "auto_payment"] }
+      ]
+    },
+    {
+      id: "q5",
+      text: "NEW 하나원큐 앱을 쓴다면 가장 자주 확인할 것 같은 기능은?",
+      choices: [
+        { text: "카드 사용 내역", scores: { digital: 2, saving: 1 }, benefits: ["digital_life"] },
+        { text: "계좌 잔액과 급여 입금", scores: { saving: 3 }, benefits: ["salary_management"] },
+        { text: "이체와 송금", scores: { digital: 2, saving: 1 }, benefits: ["digital_life"] },
+        { text: "혜택과 이벤트", scores: { culture: 2, px: 1 }, benefits: ["sports_event", "px_cashback"] }
+      ]
+    },
+    {
+      id: "q6",
+      text: "PX에 들어갔을 때 가장 먼저 보는 코너는?",
+      choices: [
+        { text: "간식·음료", scores: { px: 3 }, benefits: ["px_cashback"] },
+        { text: "생활용품", scores: { px: 2, saving: 1 }, benefits: ["px_cashback", "salary_management"] },
+        { text: "선물용 제품", scores: { digital: 2 }, benefits: ["online_shopping"] },
+        { text: "일단 가격표부터 본다", scores: { saving: 3 }, benefits: ["salary_management"] }
+      ]
+    },
+    {
+      id: "q7",
+      text: "나라사랑카드 혜택을 가장 자주 활용할 것 같은 순간은?",
+      choices: [
+        { text: "PX·편의점에서 간식이나 생활용품을 살 때", scores: { px: 3 }, benefits: ["px_cashback", "cu_discount"] },
+        { text: "휴가·외출 때 교통수단을 이용할 때", scores: { transport: 3 }, benefits: ["transport_cashback"] },
+        { text: "친구들과 외식하거나 문화생활을 즐길 때", scores: { food: 2, culture: 1 }, benefits: ["delivery_food", "movie_culture"] },
+        { text: "앱으로 소비 내역이나 군 급여를 관리할 때", scores: { digital: 2, saving: 1 }, benefits: ["digital_life", "salary_management"] }
+      ]
+    },
+    {
+      id: "q8",
+      text: "한 달 예산을 관리한다면 가장 먼저 줄이고 싶은 항목은?",
+      choices: [
+        { text: "간식·편의점", scores: { px: 2, saving: 1 }, benefits: ["cu_discount", "px_cashback"] },
+        { text: "교통비", scores: { transport: 3 }, benefits: ["transport_cashback"] },
+        { text: "배달·외식", scores: { food: 3 }, benefits: ["delivery_food"] },
+        { text: "구독·온라인 결제", scores: { digital: 2, saving: 1 }, benefits: ["auto_payment", "digital_life"] }
+      ]
+    },
+    {
+      id: "q9",
+      text: "카드 혜택을 설명받을 때 가장 좋은 방식은?",
+      choices: [
+        { text: "내 상황에 맞춰 추천받기", scores: { digital: 2 }, benefits: ["digital_life"] },
+        { text: "혜택 금액을 바로 보기", scores: { saving: 3 }, benefits: ["salary_management"] },
+        { text: "실제 사용 예시로 보기", scores: { px: 1, transport: 1, food: 1 }, benefits: ["px_cashback", "transport_cashback", "delivery_food"] },
+        { text: "이벤트처럼 재미있게 체험하기", scores: { culture: 3 }, benefits: ["sports_event", "movie_culture"] }
+      ]
+    },
+    {
+      id: "q10",
+      text: "당신에게 나라사랑카드는 어떤 카드였으면 좋겠나요?",
+      choices: [
+        { text: "군 생활비를 확 줄여주는 카드", scores: { px: 2, saving: 1 }, benefits: ["px_cashback", "salary_management"] },
+        { text: "휴가 때 든든한 카드", scores: { transport: 2, culture: 1 }, benefits: ["transport_cashback", "movie_culture"] },
+        { text: "외식과 여가를 더 즐길 수 있는 카드", scores: { food: 2, culture: 1 }, benefits: ["delivery_food", "sports_event"] },
+        { text: "앱으로 쉽게 관리되는 카드", scores: { digital: 2, saving: 1 }, benefits: ["digital_life", "auto_payment"] }
+      ]
     }
-    .source-pill.live { color: #0a6b3b; background: #e3f6ea; border: 1px solid #bde6cc; }
-    .source-pill.local { color: var(--olive-dark); background: var(--olive-050); border: 1px solid rgba(107,112,66,.25); }
-    .source-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-
-    .dash-toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
-    }
-    .updated { font-size: 12px; color: var(--muted); }
-
-    /* KPI */
-    .kpi-grid { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
-    .kpi {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 16px; padding: 18px; box-shadow: var(--shadow-sm);
-    }
-    .kpi .kpi-label { font-size: 12.5px; color: var(--muted); font-weight: 600; }
-    .kpi .kpi-num { font-size: 30px; font-weight: 800; color: var(--teal-800); line-height: 1.1; margin-top: 6px; }
-    .kpi .kpi-num small { font-size: 14px; font-weight: 700; color: var(--muted); }
-    .kpi.accent { background: linear-gradient(150deg, var(--teal-050), #fff); border-color: var(--teal-100); }
-
-    /* 카드 헤더 */
-    .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
-    .card-head h3 { font-size: 16px; font-weight: 800; color: var(--teal-900); }
-    .card-head .count { font-size: 12.5px; color: var(--muted); }
-
-    /* 막대 그래프 */
-    .bars { display: grid; gap: 12px; }
-    .bar-row { display: grid; grid-template-columns: 128px 1fr auto; align-items: center; gap: 12px; }
-    .bar-label { font-size: 13.5px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 7px; }
-    .bar-label .ic { font-size: 15px; }
-    .bar-track { height: 14px; border-radius: var(--radius-pill); background: var(--teal-050); overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: var(--radius-pill); min-width: 3px; transition: width .5s cubic-bezier(.4,0,.2,1); }
-    .bar-val { font-size: 13px; font-weight: 800; color: var(--teal-800); white-space: nowrap; min-width: 58px; text-align: right; }
-    .bar-val small { color: var(--muted); font-weight: 700; }
-
-    /* 최근 내역 */
-    .recent { display: grid; gap: 8px; }
-    .recent-row {
-      display: grid; grid-template-columns: 150px 1fr; gap: 10px; align-items: start;
-      padding: 12px 0; border-bottom: 1px solid var(--line);
-    }
-    .recent-row:last-child { border-bottom: none; }
-    .recent-time { font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
-    .recent-main .rtype { font-size: 14.5px; font-weight: 800; color: var(--teal-800); }
-    .recent-main .rben { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
-
-    /* 빈 상태 */
-    .empty { text-align: center; padding: 20px 10px; }
-    .empty img { width: min(180px, 60%); margin: 0 auto 14px; }
-    .empty h3 { font-size: 18px; font-weight: 800; color: var(--teal-900); }
-    .empty p { color: var(--muted); font-size: 14px; margin-top: 8px; }
-
-    @media (min-width: 720px) {
-      .kpi-grid { grid-template-columns: repeat(4, 1fr); }
-      .dash-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
-    }
-  </style>
-</head>
-<body>
-  <main class="wrapper">
-    <!-- 로그인 게이트 -->
-    <section id="gate" class="gate">
-      <div class="gate-card">
-        <div class="lock">🔐</div>
-        <h2>보급소 관제실</h2>
-        <p>HANA뿐인 PX 결과 대시보드입니다.<br>운영자 비밀번호를 입력하세요.</p>
-        <div class="gate-field">
-          <input id="pw" type="password" inputmode="text" placeholder="비밀번호" autocomplete="off" />
-          <button id="loginBtn" class="btn">입장하기</button>
-        </div>
-        <div id="gateErr" class="gate-err"></div>
-      </div>
-    </section>
-
-    <!-- 대시보드 본문 -->
-    <div id="dash" class="hidden" style="display:flex; flex-direction:column; gap:18px;">
-      <header class="site-topbar dash-topbar">
-        <div class="title-group">
-          <img src="./hana-character-dashboard.png" alt="하나 캐릭터" />
-          <div>
-            <h1>HANA뿐인 PX · 결과 대시보드</h1>
-            <span class="sub" id="campaignLabel"></span>
-          </div>
-        </div>
-        <span class="topbar-chip">PX CONTROL</span>
-      </header>
-
-      <div class="dash-toolbar">
-        <span id="sourcePill" class="source-pill local"><span class="dot"></span>불러오는 중…</span>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <span class="updated" id="updated"></span>
-          <button id="refreshBtn" class="btn small secondary">새로고침</button>
-        </div>
-      </div>
-
-      <!-- KPI -->
-      <section class="kpi-grid">
-        <div class="kpi accent">
-          <div class="kpi-label">총 참여자</div>
-          <div class="kpi-num" id="kpiTotal">0<small> 명</small></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">오늘 참여</div>
-          <div class="kpi-num" id="kpiToday">0<small> 명</small></div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">최다 혜택 유형</div>
-          <div class="kpi-num" id="kpiTopType" style="font-size:20px;">-</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">하나원큐 전환</div>
-          <div class="kpi-num" id="kpiClicks">0<small> 명</small></div>
-        </div>
-      </section>
-
-      <!-- 빈 상태 -->
-      <section id="emptyState" class="panel hidden">
-        <div class="empty">
-          <img src="./hana-character-guide.png" alt="안내 캐릭터" />
-          <h3>아직 집계된 참여 결과가 없습니다</h3>
-          <p>부스에서 테스트가 진행되면 이 화면에 실시간으로 통계가 쌓입니다.<br>
-             Supabase를 연결하지 않은 경우, 이 브라우저에서 진행한 결과만 표시됩니다.</p>
-        </div>
-      </section>
-
-      <!-- 그래프 2단 -->
-      <div id="charts" class="dash-cols hidden">
-        <section class="panel">
-          <div class="card-head">
-            <h3>혜택 유형 분포</h3>
-            <span class="count" id="typeCount"></span>
-          </div>
-          <div class="bars" id="typeBars"></div>
-        </section>
-
-        <section class="panel">
-          <div class="card-head">
-            <h3>추천 혜택 TOP</h3>
-            <span class="count">보급품 추천 누적</span>
-          </div>
-          <div class="bars" id="benefitBars"></div>
-        </section>
-      </div>
-
-      <!-- 최근 참여 -->
-      <section id="recentCard" class="panel hidden">
-        <div class="card-head">
-          <h3>최근 참여 내역</h3>
-          <span class="count" id="recentCount"></span>
-        </div>
-        <div class="recent" id="recentList"></div>
-      </section>
-
-      <p class="notice">
-        결과는 <b id="srcNote">-</b>에서 불러옵니다. Supabase 미연결 시에는 이 브라우저의 localStorage 데이터만
-        표시되며 기기 간 합산은 되지 않습니다. 운영 시에는 대시보드 읽기 권한을 관리자 전용으로 제한하는 것을 권장합니다.
-      </p>
-    </div>
-  </main>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./config.js?v=20020706"></script>
-  <script src="./data.js?v=20260720-2"></script>
-  <script>
-    const $ = (id) => document.getElementById(id);
-    const CFG = window.HANA_PX_CONFIG || (typeof HANA_PX_CONFIG !== "undefined" ? HANA_PX_CONFIG : {});
-    const DATA = window.HANA_PX_DATA || (typeof HANA_PX_DATA !== "undefined" ? HANA_PX_DATA : {});
-
-    const supabaseClient = (() => {
-      if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase) return null;
-      try { return window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey); }
-      catch (e) { console.warn("Supabase 초기화 실패", e); return null; }
-    })();
-
-    /* ---------- 로그인 게이트 ---------- */
-    function unlock() {
-      $("gate").classList.add("hidden");
-      $("dash").classList.remove("hidden");
-      $("campaignLabel").textContent = DATA.campaignId ? `캠페인 · ${DATA.campaignId}` : "";
-      loadAndRender();
-    }
-    function tryLogin() {
-      const val = $("pw").value;
-      if (val === CFG.dashboardPassword) {
-        sessionStorage.setItem("hana_px_admin", "1");
-        $("gateErr").textContent = "";
-        unlock();
-      } else {
-        $("gateErr").textContent = "비밀번호가 올바르지 않습니다.";
-        $("pw").select();
-      }
-    }
-    $("loginBtn").addEventListener("click", tryLogin);
-    $("pw").addEventListener("keydown", (e) => { if (e.key === "Enter") tryLogin(); });
-    if (sessionStorage.getItem("hana_px_admin") === "1") unlock();
-    else $("pw").focus();
-
-    /* ---------- 데이터 로드 ---------- */
-    async function loadResults() {
-      if (supabaseClient) {
-        try {
-          const { data, error } = await supabaseClient
-            .from(CFG.tableName)
-            .select("*")
-            .eq("campaign_id", DATA.campaignId)
-            .order("created_at", { ascending: false });
-          if (!error && Array.isArray(data)) return { source: "supabase", rows: data };
-          console.warn("Supabase 조회 오류, 로컬로 대체", error);
-        } catch (e) { console.warn("Supabase 조회 예외, 로컬로 대체", e); }
-      }
-      const local = JSON.parse(localStorage.getItem("hana_px_results") || "[]")
-        .filter(r => !DATA.campaignId || r.campaign_id === DATA.campaignId)
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      return { source: "local", rows: local };
-    }
-
-    function getClicks() {
-      return JSON.parse(localStorage.getItem("hana_px_oneq_clicks") || "[]").length;
-    }
-
-    /* ---------- 집계 ---------- */
-    function isToday(iso) {
-      const d = new Date(iso);
-      const n = new Date();
-      return d.getFullYear() === n.getFullYear() && d.getMonth() === n.getMonth() && d.getDate() === n.getDate();
-    }
-    function fmtTime(iso) {
-      const d = new Date(iso);
-      if (isNaN(d)) return "-";
-      return d.toLocaleString("ko-KR", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
-    }
-
-    function renderBars(el, entries, max, colorFn, total) {
-      el.innerHTML = "";
-      if (!entries.length) { el.innerHTML = '<p class="notice" style="border:none;padding:0;margin:0;">데이터가 없습니다.</p>'; return; }
-      entries.forEach(([label, value, icon]) => {
-        const pct = max > 0 ? Math.round((value / max) * 100) : 0;
-        const share = total > 0 ? Math.round((value / total) * 100) : 0;
-        const row = document.createElement("div");
-        row.className = "bar-row";
-        row.innerHTML = `
-          <div class="bar-label">${icon ? `<span class="ic">${icon}</span>` : ""}<span>${label}</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${colorFn(label)}"></div></div>
-          <div class="bar-val">${value}<small> · ${share}%</small></div>`;
-        el.appendChild(row);
-      });
-    }
-
-    function render(state) {
-      const { source, rows } = state;
-      const total = rows.length;
-
-      // 소스 표시
-      const pill = $("sourcePill");
-      if (source === "supabase") {
-        pill.className = "source-pill live";
-        pill.innerHTML = '<span class="dot"></span>Supabase 실시간 연결';
-        $("srcNote").textContent = "Supabase (실시간)";
-      } else {
-        pill.className = "source-pill local";
-        pill.innerHTML = '<span class="dot"></span>이 브라우저 로컬 저장';
-        $("srcNote").textContent = "이 브라우저 localStorage";
-      }
-      $("updated").textContent = "업데이트 " + new Date().toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-
-      // KPI
-      $("kpiTotal").innerHTML = `${total}<small> 명</small>`;
-      $("kpiToday").innerHTML = `${rows.filter(r => isToday(r.created_at)).length}<small> 명</small>`;
-      const oneqClicked = rows.filter(r => r.oneq_clicked).length;
-      const oneqRate = total ? Math.round(oneqClicked / total * 100) : 0;
-      $("kpiClicks").innerHTML = `${oneqClicked}<small> 명 · ${oneqRate}%</small>`;
-
-      // 유형 분포 (모든 카테고리 기준)
-      const cats = DATA.categories || {};
-      const catCount = {};
-      Object.keys(cats).forEach(k => catCount[k] = 0);
-      rows.forEach(r => { if (r.result_category != null) catCount[r.result_category] = (catCount[r.result_category] || 0) + 1; });
-      const catEntries = Object.entries(catCount)
-        .map(([k, v]) => [cats[k] ? cats[k].name : k, v, cats[k] ? cats[k].icon : "", k])
-        .filter(e => e[1] > 0)
-        .sort((a, b) => b[1] - a[1]);
-      const catMax = Math.max(1, ...catEntries.map(e => e[1]));
-      const catColorByName = {};
-      Object.values(cats).forEach(c => catColorByName[c.name] = c.color);
-      $("kpiTopType").textContent = catEntries.length ? catEntries[0][0] : "-";
-      $("typeCount").textContent = `${catEntries.length}개 유형`;
-      renderBars($("typeBars"), catEntries.map(e => [e[0], e[1], e[2]]), catMax,
-        (name) => catColorByName[name] || "var(--teal-600)", total);
-
-      // 추천 혜택 TOP
-      const bens = DATA.benefits || {};
-      const benCount = {};
-      rows.forEach(r => (r.top_benefit_ids || []).forEach(id => { benCount[id] = (benCount[id] || 0) + 1; }));
-      const benEntries = Object.entries(benCount)
-        .map(([id, v]) => [bens[id] ? bens[id].title : id, v])
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10);
-      const benMax = Math.max(1, ...benEntries.map(e => e[1]));
-      renderBars($("benefitBars"), benEntries, benMax, () => "var(--teal-600)", total);
-
-      // 최근 내역
-      const recentEl = $("recentList");
-      recentEl.innerHTML = "";
-      rows.slice(0, 25).forEach(r => {
-        const benTitles = (r.top_benefit_ids || []).slice(0, 3)
-          .map(id => bens[id] ? bens[id].title : id).join(" · ");
-        const row = document.createElement("div");
-        row.className = "recent-row";
-        row.innerHTML = `
-          <div class="recent-time">${fmtTime(r.created_at)}</div>
-          <div class="recent-main">
-            <div class="rtype">${r.result_type || "-"}</div>
-            <div class="rben">${benTitles || "-"}</div>
-          </div>`;
-        recentEl.appendChild(row);
-      });
-      $("recentCount").textContent = `최근 ${Math.min(rows.length, 25)}건`;
-
-      // 표시 토글
-      const hasData = total > 0;
-      $("emptyState").classList.toggle("hidden", hasData);
-      $("charts").classList.toggle("hidden", !hasData);
-      $("recentCard").classList.toggle("hidden", !hasData);
-    }
-
-    async function loadAndRender() {
-      const btn = $("refreshBtn");
-      btn.disabled = true; const prev = btn.textContent; btn.textContent = "불러오는 중…";
-      try {
-        const state = await loadResults();
-        render(state);
-      } finally {
-        btn.disabled = false; btn.textContent = prev;
-      }
-    }
-    $("refreshBtn").addEventListener("click", loadAndRender);
-  </script>
-</body>
-</html>
+  ]
+};
