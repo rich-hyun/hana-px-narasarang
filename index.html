@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>HANA뿐인 PX | 나라사랑카드 맞춤 혜택 테스트</title>
   <link rel="icon" type="image/png" href="./hana-symbol.png" />
-  <link rel="stylesheet" href="./style.css?v=20260720-2" />
+  <link rel="stylesheet" href="./style.css?v=20260720-3" />
 </head>
 <body>
   <main class="wrapper">
@@ -67,18 +67,33 @@
     <section id="result" class="panel hidden"></section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./config.js"></script>
-  <script src="./data.js?v=20260720-2"></script>
+  <script src="./data.js?v=20260720-3"></script>
   <script>
     const $ = (id) => document.getElementById(id);
     const state = { index: 0, answers: [], scores: {}, benefitScores: {}, resultRowId: null };
 
-    const supabaseClient = (() => {
-      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
-      if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || !window.supabase) return null;
-      return window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
-    })();
+    let supabaseClient = null;
+
+    function initSupabaseClient() {
+      const cfg = window.HANA_PX_CONFIG || {};
+      if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || !window.supabase) return;
+      try {
+        supabaseClient = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+      } catch (error) {
+        console.warn("Supabase 초기화 실패. 설문은 로컬 모드로 계속 작동합니다.", error);
+        supabaseClient = null;
+      }
+    }
+
+    function loadSupabaseInBackground() {
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+      script.async = true;
+      script.onload = initSupabaseClient;
+      script.onerror = () => console.warn("Supabase CDN 로드 실패. 설문은 로컬 모드로 계속 작동합니다.");
+      document.head.appendChild(script);
+    }
 
     function resetScores() {
       Object.keys(HANA_PX_DATA.categories).forEach(key => state.scores[key] = 0);
@@ -128,11 +143,14 @@
 
     function calculateResult() {
       const categoryKey = Object.entries(state.scores).sort((a, b) => b[1] - a[1])[0][0];
-      const topBenefits = Object.entries(state.benefitScores)
-        .sort((a, b) => b[1] - a[1])
-        .filter(([, score]) => score > 0)
-        .slice(0, 4)
-        .map(([key]) => key);
+      const configuredBenefits = HANA_PX_DATA.categories[categoryKey].resultBenefits || [];
+      const topBenefits = configuredBenefits.length
+        ? configuredBenefits.slice(0, 4)
+        : Object.entries(state.benefitScores)
+            .sort((a, b) => b[1] - a[1])
+            .filter(([, score]) => score > 0)
+            .slice(0, 4)
+            .map(([key]) => key);
       while (topBenefits.length < 4) {
         const fallback = Object.keys(HANA_PX_DATA.benefits).find(key => !topBenefits.includes(key));
         if (!fallback) break;
@@ -160,7 +178,7 @@
     }
 
     async function saveResult(result) {
-      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+      const cfg = window.HANA_PX_CONFIG || {};
       const localKey = "hana_px_results";
       const localResults = JSON.parse(localStorage.getItem(localKey) || "[]");
       result.oneq_clicked = false;
@@ -189,7 +207,7 @@
 
 
     function getAppLinkSet() {
-      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+      const cfg = window.HANA_PX_CONFIG || {};
       const links = cfg.appLinks || {};
       return {
         officialOneQ: links.officialOneQ || "https://m.site.naver.com/2c2Wd",
@@ -211,7 +229,7 @@
         }
       } catch (e) {}
       // Supabase: 이 참여 행을 oneq_clicked = true 로 업데이트
-      const cfg = window.HANA_PX_CONFIG || HANA_PX_CONFIG;
+      const cfg = window.HANA_PX_CONFIG || {};
       if (supabaseClient && state.resultRowId != null) {
         try {
           await supabaseClient.from(cfg.tableName).update({ oneq_clicked: true }).eq("id", state.resultRowId);
@@ -273,6 +291,7 @@
 
     $("startBtn").addEventListener("click", startQuiz);
     resetScores();
+    loadSupabaseInBackground();
   </script>
 </body>
 </html>

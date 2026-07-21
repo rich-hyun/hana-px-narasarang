@@ -7,37 +7,43 @@ window.HANA_PX_DATA = {
       name: "PX 보급왕",
       icon: "🪖",
       description: "군마트·편의점·생활비 절약에 가장 민감한 실속형입니다.",
-      color: "#00856f"
+      color: "#00856f",
+      resultBenefits: ["px_cashback", "cu_discount", "delivery_app_cashback", "delivery_food"]
     },
     transport: {
       name: "휴가 기동대",
       icon: "🚌",
       description: "외출·외박·휴가 때 교통비와 이동 편의성을 가장 중요하게 봅니다.",
-      color: "#1976d2"
+      color: "#1976d2",
+      resultBenefits: ["transport_cashback", "salary_transfer_transport", "px_cashback", "movie_culture"]
     },
     food: {
       name: "외식 작전반",
       icon: "🍔",
       description: "배달, 외식, 카페처럼 먹는 즐거움을 놓치지 않는 타입입니다.",
-      color: "#f59e0b"
+      color: "#f59e0b",
+      resultBenefits: ["delivery_food", "transport_cashback", "px_cashback", "fast_food"]
     },
     digital: {
       name: "디지털 통신병",
       icon: "📱",
       description: "모바일 결제, 앱, 온라인 쇼핑, 구독 서비스를 자주 활용하는 타입입니다.",
-      color: "#7c3aed"
+      color: "#7c3aed",
+      resultBenefits: ["online_shopping_result", "digital_life_result", "subscription_service", "app_store_payment"]
     },
     culture: {
       name: "문화 생활병",
       icon: "🎬",
-      description: "영화, 스포츠, 여가 활동에서 혜택을 잘 챙기는 타입입니다.",
-      color: "#e11d48"
+      description: "영화와 다양한 문화생활을 즐기는 사람에게 잘 맞는 타입입니다.",
+      color: "#e11d48",
+      resultBenefits: ["movie_culture", "delivery_food", "amusement_park", "restaurant"]
     },
     saving: {
       name: "월급 관리관",
       icon: "💰",
-      description: "군 급여, 자동이체, 저축처럼 돈 관리에 관심이 많은 타입입니다.",
-      color: "#0f766e"
+      description: "군 급여와 생활비를 알뜰하게 관리하는 타입입니다.",
+      color: "#0f766e",
+      resultBenefits: ["salary_transfer_saving", "phone_care", "active_duty_insurance", "px_cashback"]
     }
   },
   benefits: {
@@ -90,6 +96,66 @@ window.HANA_PX_DATA = {
       title: "자동이체·고정비 관리",
       tag: "고정비",
       description: "통신비, 구독료, 자동이체처럼 매달 나가는 돈을 관리할 때 유용합니다."
+    },
+    delivery_app_cashback: {
+      title: "배달앱 캐시백",
+      tag: "배달",
+      description: "휴가나 외출 중 친구들과 함께 배달 음식을 즐길 때 유용한 캐시백 혜택입니다."
+    },
+    salary_transfer_transport: {
+      title: "군 급여이체 혜택",
+      tag: "급여",
+      description: "군 급여이체 시 다양한 추가 혜택과 금융서비스를 받을 수 있습니다."
+    },
+    fast_food: {
+      title: "패스트푸드 혜택",
+      tag: "외식",
+      description: "휴가 중 간편한 한 끼를 즐길 때 활용하기 좋은 혜택입니다."
+    },
+    online_shopping_result: {
+      title: "온라인 쇼핑 혜택",
+      tag: "쇼핑",
+      description: "쿠팡, 29CM 등 온라인 쇼핑을 자주 이용하는 분들에게 추천하는 혜택입니다."
+    },
+    digital_life_result: {
+      title: "디지털 라이프 혜택",
+      tag: "디지털",
+      description: "넷플릭스, 유튜브 프리미엄, 네이버웹툰 등 디지털 콘텐츠와 구독 서비스를 자주 이용할 때 활용하기 좋은 혜택입니다."
+    },
+    subscription_service: {
+      title: "구독 서비스 혜택",
+      tag: "멤버십",
+      description: "네이버플러스·쿠팡와우 맴버십 등 온라인 쇼핑 멤버십을 자주 이용하는 사람에게 잘 맞습니다."
+    },
+    app_store_payment: {
+      title: "앱스토어 결제 혜택",
+      tag: "앱",
+      description: "앱과 디지털 콘텐츠 결제가 많은 사람에게 추천합니다."
+    },
+    amusement_park: {
+      title: "놀이공원 혜택",
+      tag: "여가",
+      description: "휴가나 외출 때 놀이공원을 즐기는 사람에게 좋은 혜택입니다."
+    },
+    restaurant: {
+      title: "레스토랑 혜택",
+      tag: "외식",
+      description: "외식과 모임을 자주 즐기는 사람에게 잘 맞는 혜택입니다."
+    },
+    salary_transfer_saving: {
+      title: "군 급여이체 혜택",
+      tag: "급여",
+      description: "군 급여를 받으며 다양한 생활 혜택을 함께 누리고 싶은 사람에게 잘 맞습니다."
+    },
+    phone_care: {
+      title: "휴대폰 케어",
+      tag: "휴대폰",
+      description: "군 생활 중 휴대폰을 더욱 안심하고 사용하고 싶은 사람에게 추천합니다."
+    },
+    active_duty_insurance: {
+      title: "현역병 상해보험",
+      tag: "보험",
+      description: "군 복무 중 다양한 상황에 대비할 수 있는 혜택입니다."
     }
   },
   questions: [
